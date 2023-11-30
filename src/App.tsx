@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   ActionIcon,
   Anchor,
@@ -21,44 +21,62 @@ import YouTubeSocialIcon from "./assets/youtube_social_icon_dark.png";
 import { container, transparentButton } from "./App.css.ts";
 
 const defaultKelvinOptions = [1900, 3200, 4500, 5500, 6500, 8000, 10000];
+const darkThemeDefault = 3200;
+const lightThemeDefault = 6500;
+
+const getDefaultTemperature = () => {
+  if (window.matchMedia("(prefers-color-scheme: light)").matches) {
+    return lightThemeDefault;
+  } else {
+    return darkThemeDefault;
+  }
+};
 
 export function App() {
   const [controlsHidden, setControlsHidden] = useState(false);
-  const [temperature, setTemperature] = useState(3200);
+  const [temperature, setTemperature] = useState(getDefaultTemperature());
   const rgbFromKelvin = kelvinTable[temperature];
 
   return (
     <Box
       role="button"
       className={container}
-      style={{ backgroundColor: rgbFromKelvin }}
+      style={{ backgroundColor: rgbFromKelvin, overflow: "hidden" }}
       onClick={
         controlsHidden ? () => setControlsHidden(!controlsHidden) : () => {}
       }
     >
-      <Box h="100%" maw="1600px" mx="auto">
+      <Box w="100%" h="100%" pos="relative" maw="1280px" mx="auto">
         {controlsHidden && (
-          <Group justify="flex-end" w="100%">
-            <ActionIcon
-              style={{ backgroundColor: "transparent" }}
-              size="lg"
-              mx="xl"
-              my="md"
-            >
-              <IconLayoutSidebarRightExpand
-                color="black"
-                size="lg"
-                onClick={() => setControlsHidden(!controlsHidden)}
-              />
-            </ActionIcon>
-          </Group>
+          <Button
+            variant="outline"
+            color="black"
+            style={{ border: "transparent" }}
+            onClick={() => setControlsHidden(!controlsHidden)}
+            pos="absolute"
+            right={0}
+            top={0}
+            my="md"
+          >
+            {<Text>Show controls</Text>}
+            {
+              <ActionIcon size="lg" style={{ backgroundColor: "transparent" }}>
+                <IconLayoutSidebarRightExpand
+                  color="black"
+                  onClick={() => setControlsHidden(!controlsHidden)}
+                />
+              </ActionIcon>
+            }
+          </Button>
         )}
-        <Center
-          h="100%"
-          w="100%"
-          style={{ visibility: controlsHidden ? "hidden" : "visible" }}
-        >
-          <Stack w="95vw" align="center" h="100%" justify="space-between">
+        <Center h="100%" w="100%">
+          <Stack
+            w="95vw"
+            align="center"
+            h="100%"
+            justify="space-between"
+            style={{ visibility: controlsHidden ? "hidden" : "visible" }}
+          >
             <Stack pt="md" gap={0} align="flex-end" justify="flex-end" w="100%">
               <Button
                 variant="outline"
@@ -66,15 +84,15 @@ export function App() {
                 style={{ border: "transparent" }}
                 onClick={() => setControlsHidden(!controlsHidden)}
               >
-                {!controlsHidden && <Text>Hide controls</Text>}
-                {!controlsHidden && (
+                {<Text>Hide controls</Text>}
+                {
                   <ActionIcon
                     size="lg"
                     style={{ backgroundColor: "transparent" }}
                   >
                     <IconLayoutSidebarLeftExpand color="black" />
                   </ActionIcon>
-                )}
+                }
               </Button>
             </Stack>
             <Stack align="center" w="80%">
