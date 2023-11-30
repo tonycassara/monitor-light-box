@@ -59,41 +59,14 @@ export function App() {
           style={{ visibility: controlsHidden ? "hidden" : "visible" }}
         >
           <Stack w="95vw" align="center" h="100%" justify="space-between">
-            <Group gap={0} justify="space-between" w="100%">
-              <Group align="start" gap="xs">
-                <Text>Made by Tony Cassara</Text>
-                <Group align="center">
-                  <Anchor
-                    c="black"
-                    href="https://github.com/tonycassara/monitor-light-box"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <IconBrandGithubFilled color="black" />
-                  </Anchor>
-                  <Anchor
-                    c="black"
-                    pb="2"
-                    href="https://www.youtube.com/c/TonyCassara"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <img src={YouTubeSocialIcon} width={24} />
-                  </Anchor>
-                </Group>
-              </Group>
+            <Stack pt="md" gap={0} align="flex-end" justify="flex-end" w="100%">
               <Button
                 variant="outline"
-                m="lg"
                 color="black"
                 style={{ border: "transparent" }}
                 onClick={() => setControlsHidden(!controlsHidden)}
               >
-                {!controlsHidden && (
-                  <Text size="lg" c="black">
-                    Hide controls
-                  </Text>
-                )}
+                {!controlsHidden && <Text>Hide controls</Text>}
                 {!controlsHidden && (
                   <ActionIcon
                     size="lg"
@@ -103,7 +76,7 @@ export function App() {
                   </ActionIcon>
                 )}
               </Button>
-            </Group>
+            </Stack>
             <Stack align="center" w="80%">
               <Title order={2} pb="sm">
                 Current: {temperature}K {getKelvinEmoji(temperature)}
@@ -136,7 +109,25 @@ export function App() {
                 ))}
               </Group>
             </Stack>
-            <div />
+            <Group align="center" gap="xs" pb="xl">
+              <Text>Made by Tony Cassara</Text>
+              <Anchor
+                c="black"
+                href="https://github.com/tonycassara/monitor-light-box"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <IconBrandGithubFilled color="black" />
+              </Anchor>
+              <Anchor
+                c="black"
+                href="https://www.youtube.com/c/TonyCassara"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <img src={YouTubeSocialIcon} width={24} />
+              </Anchor>
+            </Group>
           </Stack>
         </Center>
       </Box>
