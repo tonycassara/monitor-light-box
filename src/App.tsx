@@ -1,6 +1,5 @@
 import { useState } from "react";
 import {
-  ActionIcon,
   Anchor,
   Box,
   Button,
@@ -18,7 +17,11 @@ import {
   IconBrandGithubFilled,
 } from "@tabler/icons-react";
 import YouTubeSocialIcon from "./assets/youtube_social_icon_dark.png";
-import { container, transparentButton } from "./App.css.ts";
+import {
+  container,
+  transparentButton,
+  transparentButtonSelected,
+} from "./App.css.ts";
 
 const defaultKelvinOptions = [1900, 3200, 4500, 5500, 6500, 8000, 10000];
 const darkThemeDefault = 3200;
@@ -51,62 +54,53 @@ export function App() {
       }
     >
       <Box w="100%" h="100%" pos="relative" maw="1280px" mx="auto">
-        <Button
-          variant="outline"
-          color="black"
-          onClick={() => setControlsHidden(!controlsHidden)}
-          pos="absolute"
-          right={0}
-          top={0}
-          my="md"
-          style={{
-            border: "transparent",
-            opacity: controlsHidden ? "1" : "0",
-            transition: "opacity 220ms ease",
-          }}
-        >
-          {<Text>Show controls</Text>}
-          {
-            <ActionIcon size="lg" style={{ backgroundColor: "transparent" }}>
-              <IconLayoutSidebarRightExpand
-                color="black"
-                onClick={() => setControlsHidden(!controlsHidden)}
-              />
-            </ActionIcon>
-          }
-        </Button>
         <Center h="100%" w="100%">
-          <Stack
-            w="95vw"
-            align="center"
-            h="100%"
-            justify="space-between"
-            style={{
-              opacity: controlsHidden ? "0" : "1",
-              transition: "opacity 220ms ease",
-            }}
-          >
+          <Stack w="95vw" align="center" h="100%" justify="space-between">
             <Stack pt="md" gap={0} align="flex-end" justify="flex-end" w="100%">
-              <Button
-                variant="outline"
-                color="black"
-                style={{ border: "transparent" }}
-                onClick={() => setControlsHidden(!controlsHidden)}
-              >
-                {<Text>Hide controls</Text>}
-                {
-                  <ActionIcon
-                    size="lg"
-                    style={{ backgroundColor: "transparent" }}
-                  >
-                    <IconLayoutSidebarLeftExpand color="black" />
-                  </ActionIcon>
-                }
-              </Button>
+              <Group w="100%" align="center" gap={0} justify="space-between">
+                <Anchor
+                  c="black"
+                  href="https://github.com/tonycassara/monitor-light-box"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  mx="sm"
+                  style={{
+                    height: 20,
+                    opacity: controlsHidden ? "0" : "1",
+                    transition: "opacity 220ms ease",
+                  }}
+                >
+                  <IconBrandGithubFilled height="20" color="black" />
+                </Anchor>
+                <Button
+                  variant="outline"
+                  color="black"
+                  style={{ border: "transparent" }}
+                  onClick={() => setControlsHidden(!controlsHidden)}
+                  rightSection={
+                    controlsHidden ? (
+                      <IconLayoutSidebarRightExpand color="black" />
+                    ) : (
+                      <IconLayoutSidebarLeftExpand color="black" />
+                    )
+                  }
+                >
+                  <Text>
+                    {controlsHidden ? "Show controls" : "Hide controls"}
+                  </Text>
+                </Button>
+              </Group>
             </Stack>
-            <Stack align="center" w="80%">
-              <Title order={2} pb="sm">
-                Current: {temperature}K {getKelvinEmoji(temperature)}
+            <Stack
+              align="center"
+              w="80%"
+              style={{
+                opacity: controlsHidden ? "0" : "1",
+                transition: "opacity 220ms ease",
+              }}
+            >
+              <Title order={2} style={{ textWrap: "balance" }}>
+                {temperature}K {getKelvinEmoji(temperature)}
               </Title>
               <Slider
                 value={temperature}
@@ -116,43 +110,50 @@ export function App() {
                 step={100}
                 onChange={(value) => setTemperature(value)}
                 w="100%"
-                labelAlwaysOn
-                label={(value: number) => `${value}K`}
-                labelTransitionProps={{
-                  transition: "skew-down",
-                  duration: 150,
-                  timingFunction: "linear",
-                }}
+                label={null}
               />
               <Group justify="center" w="100%">
                 {defaultKelvinOptions.map((kelvin) => (
                   <Button
                     key={kelvin}
-                    className={transparentButton}
+                    className={
+                      kelvin === temperature
+                        ? transparentButtonSelected
+                        : transparentButton
+                    }
                     onClick={() => setTemperature(kelvin)}
+                    c={kelvin === temperature ? rgbFromKelvin : "black"}
                   >
                     {kelvin}K
                   </Button>
                 ))}
               </Group>
+              <Text style={{ textAlign: "center", textWrap: "balance" }}>
+                <b>Hint:</b> Disable Night Shift (on Mac) or Night Light (on
+                Windows) for best results
+              </Text>
             </Stack>
-            <Group align="center" gap="xs" pb="xl">
+            <Group
+              align="center"
+              pb="md"
+              gap="xs"
+              style={{
+                opacity: controlsHidden ? "0" : "1",
+                transition: "opacity 220ms ease",
+              }}
+            >
               <Text>Made by Tony Cassara</Text>
-              <Anchor
-                c="black"
-                href="https://github.com/tonycassara/monitor-light-box"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <IconBrandGithubFilled color="black" />
-              </Anchor>
               <Anchor
                 c="black"
                 href="https://www.youtube.com/c/TonyCassara"
                 target="_blank"
                 rel="noopener noreferrer"
+                m={0}
+                style={{
+                  height: 20,
+                }}
               >
-                <img src={YouTubeSocialIcon} width={24} />
+                <img src={YouTubeSocialIcon} height={16} />
               </Anchor>
             </Group>
           </Stack>

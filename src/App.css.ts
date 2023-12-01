@@ -10,6 +10,11 @@ export const container = style({
 export const transparentButton = style({
   border: "2px solid black !important",
   background: "transparent !important",
-  color: "black !important",
+  width: "110px !important",
+});
+
+export const transparentButtonSelected = style({
+  border: "2px solid black !important",
+  background: "black !important",
   width: "110px !important",
 });
