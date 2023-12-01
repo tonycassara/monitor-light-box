@@ -63,7 +63,6 @@ export function App() {
             border: "transparent",
             opacity: controlsHidden ? "1" : "0",
             transition: "opacity 220ms ease",
-            transitionDelay: "220ms",
           }}
         >
           {<Text>Show controls</Text>}
@@ -85,7 +84,6 @@ export function App() {
             style={{
               opacity: controlsHidden ? "0" : "1",
               transition: "opacity 220ms ease",
-              transitionDelay: "220ms",
             }}
           >
             <Stack pt="md" gap={0} align="flex-end" justify="flex-end" w="100%">
