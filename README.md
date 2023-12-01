@@ -1,6 +1,6 @@
 # 🖥️ Monitor Light Box
 
-## Use your monitor as a light source for videography and photography
+### Use your monitor as a light source for videography and photography
 
 **Note:** Works best if you have Night Shift disabled.
 
