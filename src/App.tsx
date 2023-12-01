@@ -41,41 +41,52 @@ export function App() {
     <Box
       role="button"
       className={container}
-      style={{ backgroundColor: rgbFromKelvin, overflow: "hidden" }}
+      style={{
+        backgroundColor: rgbFromKelvin,
+        overflow: "hidden",
+        transition: "background-color 280ms ease",
+      }}
       onClick={
         controlsHidden ? () => setControlsHidden(!controlsHidden) : () => {}
       }
     >
       <Box w="100%" h="100%" pos="relative" maw="1280px" mx="auto">
-        {controlsHidden && (
-          <Button
-            variant="outline"
-            color="black"
-            style={{ border: "transparent" }}
-            onClick={() => setControlsHidden(!controlsHidden)}
-            pos="absolute"
-            right={0}
-            top={0}
-            my="md"
-          >
-            {<Text>Show controls</Text>}
-            {
-              <ActionIcon size="lg" style={{ backgroundColor: "transparent" }}>
-                <IconLayoutSidebarRightExpand
-                  color="black"
-                  onClick={() => setControlsHidden(!controlsHidden)}
-                />
-              </ActionIcon>
-            }
-          </Button>
-        )}
+        <Button
+          variant="outline"
+          color="black"
+          onClick={() => setControlsHidden(!controlsHidden)}
+          pos="absolute"
+          right={0}
+          top={0}
+          my="md"
+          style={{
+            border: "transparent",
+            opacity: controlsHidden ? "1" : "0",
+            transition: "opacity 220ms ease",
+            transitionDelay: "220ms",
+          }}
+        >
+          {<Text>Show controls</Text>}
+          {
+            <ActionIcon size="lg" style={{ backgroundColor: "transparent" }}>
+              <IconLayoutSidebarRightExpand
+                color="black"
+                onClick={() => setControlsHidden(!controlsHidden)}
+              />
+            </ActionIcon>
+          }
+        </Button>
         <Center h="100%" w="100%">
           <Stack
             w="95vw"
             align="center"
             h="100%"
             justify="space-between"
-            style={{ visibility: controlsHidden ? "hidden" : "visible" }}
+            style={{
+              opacity: controlsHidden ? "0" : "1",
+              transition: "opacity 220ms ease",
+              transitionDelay: "220ms",
+            }}
           >
             <Stack pt="md" gap={0} align="flex-end" justify="flex-end" w="100%">
               <Button
